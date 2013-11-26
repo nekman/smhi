@@ -1,7 +1,7 @@
 define(function(require) {
   'use strict';
 
-  var backbone          = require('backbone'),
+  var Backbone          = require('backbone'),
       AppRouter         = require('./routers/AppRouter'),
       SMHIProvider      = require('./providers/SMHIProvider'),
       WheaterCollection = require('./models/WheaterCollection'),
