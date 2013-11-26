@@ -18,7 +18,6 @@
     "grunt-contrib-jshint": "~0.7.2",
     "grunt-contrib-jasmine": "~0.5.2",
     "grunt-contrib-requirejs": "~0.4.1",
-    "grunt-template-jasmine-requirejs": "~0.1.8",
-    "grunt-mocha": "~0.4.6"
+    "grunt-template-jasmine-requirejs": "~0.1.8"
   }
 }
