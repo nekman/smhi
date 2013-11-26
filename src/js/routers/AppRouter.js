@@ -37,7 +37,7 @@ define([
     
     routes: {
       '': 'index',
-      'loc/:lat/:lng': 'home',
+      'loc/:lat/:lng': 'location',
       'loc/:lat/:lng/next/:id': 'next',
       'loc/:lat/:lng/prev/:id': 'prev',
       '*actions': 'defaultAction' // matches http://example.com/#anything-here
@@ -45,6 +45,9 @@ define([
 
     initialize: function(collection) {
       this.collection = collection;
+      if (this.collection) {
+        this.first();
+      }
     },
 
     first: function() {
