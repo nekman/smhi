@@ -35,7 +35,8 @@ module.exports = function(grunt) {
         'src/js/provides/*.js',
         'src/js/routers/*.js',
         'src/js/utils/*.js',
-        'src/js/views/*.js'
+        'src/js/views/*.js',
+        'src/js/*.js'
       ],
       options: {
         curly: true,
