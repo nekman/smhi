@@ -10,22 +10,21 @@
 
     <title>Väder från SMHI</title>
   </head>
-
   <body>
     <script type="text/template" id="error_tmpl">
-      <div class="alert alert-warning">        
+      <div class="alert alert-warning">
         <strong><%= message %></strong>
         <p>Kunde inte få tag på position</p>
       </div>
     </script>
 
-    <script type="text/template" id="wheater_tmpl">    
-      <h1>Väder <%= date %> kl<%=time%></h1>      
-      Position: <strong><%= collection.lat %>/<%= collection.lon %></strong>      
+    <script type="text/template" id="wheater_tmpl">
+      <h1>Väder <%= date %> kl<%=time%></h1>
+      Position: <strong><%= collection.lat %>/<%= collection.lon %></strong>
       <p>Temperatur: <%= temperature.value %><%= temperature.unit %></p>
       <p>Luftfuktighet: <%= humidity.value %><%= humidity.unit %></p>
       <p>Vindstyrka: <%= wind.value %><%= wind.unit %></p>
-      
+
       <% if (rainfall.value) { %>
         <p><%= category.value %> (<%= rainfall.value %><%= rainfall.unit %>)</p>
       <% } else { %>
@@ -38,14 +37,11 @@
       </ul>      
     </script>
     
-    <div class="container">
-      <article class="jumbotron">
-        <div id="wheater" class="loading">        
-          Hämtar GPS-position och data från SMHI...
-        </div>
-      </article>      
-    </div>
-
+    
+    <article class="jumbotron">
+      <div id="wheater" class="loading">
+        Hämtar GPS-position och data från SMHI...
+      </div>
+    </article>
   </body>
-
 </html>

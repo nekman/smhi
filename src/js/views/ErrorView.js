@@ -1,5 +1,5 @@
 define([
-	'backbone',
+  'backbone',
   'lodash',
   'jquery'
 ], function(Backbone, _, $) {
