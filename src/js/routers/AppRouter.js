@@ -1,7 +1,8 @@
 define([
   'backbone',
+  './../utils/DateUtils',
   './../views/WheaterView'
-], function(Backbone, WheaterView) {
+], function(Backbone, DateUtils, WheaterView) {
   'use strict';
 
   var to = {
@@ -37,9 +38,9 @@ define([
     
     routes: {
       '': 'index',
-      'loc/:lat/:lng': 'location',
-      'loc/:lat/:lng/next/:id': 'next',
-      'loc/:lat/:lng/prev/:id': 'prev',
+      'loc/:lat/:lon': 'location',
+      'loc/:lat/:lon/next/:id': 'next',
+      'loc/:lat/:lon/prev/:id': 'prev',
       '*actions': 'defaultAction' // matches http://example.com/#anything-here
     },
 
@@ -51,18 +52,24 @@ define([
     },
 
     first: function() {
-      new WheaterView({ model: this.collection.first() });
+      var time = DateUtils.toHourString(),
+
+      model = this.collection.find(function(model) {
+        return DateUtils.toHourString(model.get('fullDate')) === time;
+      });
+
+      new WheaterView({ model: model || this.collection.first() });
     },
     
     last: function() {
       new WheaterView({ model: this.collection.last() });
     },
     
-    prev: function(lat, lng, id) {
+    prev: function(lat, lon, id) {
       nav.apply(this, [to.prev, id, this.last]);
     },
     
-    next: function(lat, lng, id) {
+    next: function(lat, lon, id) {
       nav.apply(this, [to.next, id, this.first]);
     }
   });

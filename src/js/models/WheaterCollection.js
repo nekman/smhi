@@ -18,8 +18,6 @@ function(Backbone, DateUtils) {
     },
 
     parse: function(res) {
-      this.set('id', res.validTime);
-
       this.fullDate = new Date(res.validTime);
       this.date = DateUtils.toDateString(this.fullDate);
       this.time = DateUtils.toTimeString(this.fullDate);

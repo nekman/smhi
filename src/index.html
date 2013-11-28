@@ -7,7 +7,6 @@
     <!-- http://ws.geonames.org/findNearbyPlaceNameJSON?lat=57.783544&lng=14.153471 -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
     <script data-main="js/app.config" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
-
     <title>Väder från SMHI</title>
   </head>
   <body>
@@ -19,7 +18,7 @@
     </script>
 
     <script type="text/template" id="wheater_tmpl">
-      <h1>Väder <%= date %> kl<%=time%></h1>
+      <h1><%=date %> <%=time%></h1>
       Position: <strong><%= collection.lat %>/<%= collection.lon %></strong>
       <p>Temperatur: <%= temperature.value %><%= temperature.unit %></p>
       <p>Luftfuktighet: <%= humidity.value %><%= humidity.unit %></p>
@@ -32,15 +31,37 @@
       <% } %>
       
       <ul class="pager">
-        <li class="previous"><a href="#prev/<%=cid%>">&larr; Föregående</a></li>
-        <li class="next"><a href="#next/<%=cid%>">Nästa &rarr;</a></li>
-      </ul>      
+        <li class="previous"><a href="#prev">&larr; Föregående</a></li>
+        <li class="next"><a href="#next">Nästa &rarr;</a></li>
+      </ul>
     </script>
-    
-    
+
     <article class="jumbotron">
       <div id="wheater" class="loading">
         Hämtar GPS-position och data från SMHI...
+      </div>
+
+      <style>
+      .swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > div {
+  float:left;
+  width:100%;
+  position: relative;
+}</style>
+      <div id='slider' class='swipe'>
+        <div class='swipe-wrap'>
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </div>
       </div>
     </article>
   </body>

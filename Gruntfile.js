@@ -18,9 +18,15 @@ module.exports = function(grunt) {
             requireConfig: {
               baseUrl: './',
               paths: {
-                jquery: ':empty',
+                jquery: 'src/vendor/jquery',
                 lodash: 'src/vendor/lodash',
                 backbone: 'src/vendor/backbone'
+              },
+              shim: {
+                backbone: {
+                  deps: ['jquery', 'lodash'],
+                  exports: 'Backbone'
+                }
               }
             }
           }

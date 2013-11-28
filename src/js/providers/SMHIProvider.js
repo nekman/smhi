@@ -5,11 +5,11 @@ function ($) {
   'use strict';
   
   var SMHI_GEOPOINT_URL = 'http://opendata-download-metfcst.smhi.se/api/' +
-                          'category/pmp1g/version/1/geopoint/lat/{{lat}}/lon/{{lng}}/data.json';
+                          'category/pmp1g/version/1/geopoint/lat/{{lat}}/lon/{{lon}}/data.json';
   
   function SMHIWheaterProvider(coords) {
     this.lat = coords.latitude.toFixed(6);
-    this.lng = coords.longitude.toFixed(6);
+    this.lon = coords.longitude.toFixed(6);
   }
   
   SMHIWheaterProvider.prototype = {
@@ -27,7 +27,7 @@ function ($) {
     url: function() {
       return SMHI_GEOPOINT_URL
                  .replace(/{{lat}}/, this.lat)
-                 .replace(/{{lng}}/, this.lng);
+                 .replace(/{{lon}}/, this.lon);
     }
   };
 

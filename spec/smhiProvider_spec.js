@@ -22,23 +22,20 @@ define('jquery', function() {
 define(function(require) {
   
   var SMHIProvider = require('../src/js/providers/SMHIProvider'),
-      jQuery = require('jquery');
+      jQuery = require('jquery'),
+      coords;
 
   describe('SMHIProvider', function() {
-
-    var coords;
     beforeEach(function() {
       coords = { longitude: 0.0, latitude: 1.0 };
-
       spyOn(jQuery, 'getJSON').andCallThrough();
-
     });
 
     it('should create instance', function() {
       var sut = new SMHIProvider(coords);
 
       expect(sut.lat).toBe('1.000000');
-      expect(sut.lng).toBe('0.000000');
+      expect(sut.lon).toBe('0.000000');
     });
 
     it('should fetch from SMHI', function() {

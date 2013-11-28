@@ -7,8 +7,8 @@ app.configure(function() {
   app.use('/js', express.static(__dirname + '/src/js'));
 
   // Location route
-  app.all('/loc/:lat/:lng', function(req, res) {
-    res.redirect('#/loc/'+ req.params.lat +'/' + req.params.lng);
+  app.all('/loc/:lat/:lon', function(req, res) {
+    res.redirect('#/loc/'+ req.params.lat +'/' + req.params.lon);
   });
 
   // Index routes
