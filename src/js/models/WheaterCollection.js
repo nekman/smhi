@@ -4,10 +4,13 @@ define([
 ],
 function(Backbone, DateUtils) {
   'use strict';
+
+  var SMHI_GEOPOINT_URL = 'http://opendata-download-metfcst.smhi.se/api/' +
+                          'category/pmp1g/version/1/geopoint/lat/{{lat}}/lon/{{lon}}/data.json',
   
-  var WheaterModel = Backbone.Model.extend({
+  WheaterModel = Backbone.Model.extend({
     
-    categoryName: {
+    wheaterType: {
       0: 'Ingen nederbörd',
       1: 'Snö',
       2: 'Snöblandat regn',
@@ -17,32 +20,53 @@ function(Backbone, DateUtils) {
       6: 'Snö'
     },
 
+    cloudType: {
+      0: 'Klart',
+      1: 'Klart',
+      2: 'Halvklart',
+      3: 'Halvklart',
+      4: 'Halvklart till mulet',
+      5: 'Halvklart till mulet',
+      6: 'Mulet',
+      7: 'Mulet',
+      8: 'Mulet'
+    },
+
     parse: function(res) {
-      this.fullDate = new Date(res.validTime);
-      this.date = DateUtils.toDateString(this.fullDate);
-      this.time = DateUtils.toTimeString(this.fullDate);
-      this.temperature = { value: res.t, unit: '&deg;' };
-      this.humidity = { value: res.r, unit: '%' };
-      this.probably_thunderstorm = { value: res.tstm, unit: '%' };
-      this.wind = { value: res.ws, unit: 'm/s' };
-      this.category = { value: this.categoryName[res.pcat], unit: '' };
-      this.rainfall = { value: res.pit, unit: 'mm/h' };
+      this.wind          = { value: res.ws, unit: 'm/s' };
+      this.cloud         = { value: res.tcc, name: this.cloudType[res.tcc] };
+      this.wheater       = { value: res.pcat, name: this.wheaterType[res.pcat] };
+      this.temperature   = { value: res.t, unit: '&deg;' };
+      this.humidity      = { value: res.r, unit: '%' };
+      this.rainfall      = { value: res.pit, unit: 'mm/h' };
+      this.prob_thunder  = { value: res.tstm, unit: '%' };
+      this.windDirection = { value: res.wd, unit: '' };
+
+      this.fullDate      = new Date(res.validTime);
+      this.date          = DateUtils.toDateString(this.fullDate);
+      this.time          = DateUtils.toTimeString(this.fullDate);
       
       return this;
     }
-  });
+  }),
   
-  return Backbone.Collection.extend({
+  WheaterCollection = Backbone.Collection.extend({
     model: WheaterModel,
     
-    initialize: function(data) {
-      this.lat = data.lat;
-      this.lon = data.lon;
+    initialize: function(coords) {
+      this.coords = coords;
     },
-    
+
+    url: function() {
+      return SMHI_GEOPOINT_URL
+            .replace(/{{lat}}/, this.coords.lat)
+            .replace(/{{lon}}/, this.coords.lon);
+    },
+
     parse: function(res) {
       return res.timeseries;
-    }
+    },
   });
 
+  return WheaterCollection;
 });
