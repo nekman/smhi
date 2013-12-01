@@ -2,11 +2,12 @@ define(function(require) {
   'use strict';
 
   var Backbone          = require('backbone'),
+      CoordUtils        = require('./utils/CoordUtils'),
       AppRouter         = require('./routers/AppRouter'),
-      SMHIProvider      = require('./providers/SMHIProvider'),
       WheaterCollection = require('./models/WheaterCollection'),
       ErrorView         = require('./views/ErrorView'),
-      locationProvider  = require('./providers/LocationProvider');
+      PlaceView         = require('./views/PlaceView'),
+      LocationProvider  = require('./providers/LocationProvider');
 
   var appRouter = new AppRouter,
 
@@ -15,34 +16,31 @@ define(function(require) {
   },
 
   navigateByCoords = function(coords) {
-    var smhiProvider = new SMHIProvider(coords),
-        lat = smhiProvider.lat,
-        lon = smhiProvider.lon;
+    coords = CoordUtils.toFixed(coords);
+    PlaceView.create(coords);
 
-    smhiProvider
-      .fetch()
-      .done(function(data) {
-        appRouter.initialize(
-          new WheaterCollection(data, { parse: true })
-        );
-        // trigger = false, beacuse we don't want to trigger a route event.
-        // Just update the location.
-        appRouter.navigate('loc/' + lat + '/' + lon, { trigger: false });
-      })
-      .fail(handleError);
+    var collection = new WheaterCollection(coords);
+
+    collection.fetch().done(function() {
+      appRouter.initialize(collection);
+      // trigger = false, beacuse we don't want to trigger a route event.
+      // Just update the location.
+      appRouter.navigate('loc/' + coords.lat + '/' + coords.lon, { trigger: false });
+    })
+    .fail(handleError);
   };
 
   // Index route
   appRouter.on('route:index', function() {
-    locationProvider
+    new LocationProvider()
       .fetch()
-      .then(navigateByCoords)
+      .done(navigateByCoords)
       .fail(handleError);
   });
 
   // Location route
   appRouter.on('route:location', function(lat, lon) {
-    navigateByCoords({ longitude: +lon, latitude: +lat });
+    navigateByCoords(CoordUtils.create(lat, lon));
   });
 
   Backbone.history.start({ pushState: true });
