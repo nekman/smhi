@@ -8,11 +8,10 @@ function ($) {
     timeout: 10000,
     maximumAge: 60000
   },
-  
-  geolocation = window.navigator.geolocation || {},
-    
+
   hasGeoLocation = function() {
-    return typeof geolocation.getCurrentPosition === 'function';
+    var geolocation = window.navigator.geolocation;
+    return geolocation && typeof geolocation.getCurrentPosition === 'function';
   },
   
   resolveGPS = function(dfd) {
@@ -24,31 +23,28 @@ function ($) {
   rejectGPS = function(dfd) {
     return function(err) {
       dfd.reject(err);
-      console.warn('err', err);
     };
   };
 
   function GPSProvider() {
   }
 
-  GPSProvider.prototype = {
-    fetch: function() {
-      var dfd = $.Deferred();
-      
-      if (!hasGeoLocation()) {
-        rejectGPS(dfd)({ message: 'No GPS' });
-      }
-      
-      geolocation.getCurrentPosition(
-        resolveGPS(dfd),
-        rejectGPS(dfd),
-        GPS_TIMEOUT_SETTINGS
-      );
-        
-      return dfd.promise();
+  GPSProvider.prototype.fetch = function() {
+    var dfd = $.Deferred();
+    
+    if (!hasGeoLocation()) {
+      rejectGPS(dfd)({ message: 'No GPS' });
     }
+    
+    window.navigator.geolocation.getCurrentPosition(
+      resolveGPS(dfd),
+      rejectGPS(dfd),
+      GPS_TIMEOUT_SETTINGS
+    );
+      
+    return dfd.promise();
   };
 
-  return new GPSProvider;
+  return GPSProvider;
 
 });
