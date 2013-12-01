@@ -2,9 +2,9 @@ var express = require('express');
 var app = express();
 
 app.configure(function() {
-  //Static resources
-  app.use('/src', express.static(__dirname + '/src'));
-  app.use('/js', express.static(__dirname + '/src/js'));
+  // Static resources  
+  app.use('/src', express.static(__dirname + '/src', { redirect: false }));
+  app.use('src', express.static(__dirname + '/src', { redirect: false }));
 
   // Location route
   app.all('/loc/:lat/:lon', function(req, res) {
