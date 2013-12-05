@@ -9,37 +9,10 @@
     <script data-main="src/js/app.config" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
     </script>
   </head>
-  <body>
-    <script type="text/template" id="error_tmpl">
-      <div class="alert alert-warning">
-        <strong><%= message %></strong>
-        <p>Kunde inte få tag på position</p>
-      </div>
-    </script>
 
-    <script type="text/template" id="place_tmpl">      
+  <body>  
+    <script type="text/template" id="place_tmpl">
       <strong><%= name %></strong>
-    </script>
-
-    <script type="text/template" id="wheater_tmpl">
-      <h3><%=date %> <%=time%></h3>
-      <small><%=collection.coords.lat%>/<%=collection.coords.lon%></small>
-      <div style="margin-left:15px;">
-        <i class="<%= icon %>" style="font-size:50px;"/>           
-      </div>
-      <% if (rainfall.value) { %>
-        <p><%= wheater.name %> (<%= rainfall.value %><%= rainfall.unit %>)</p>
-      <% } else { %>
-        <p><%= cloud.name %></p>
-      <% } %>
-      <p>Temperatur: <%= temperature.value %><%= temperature.unit %></p>
-      <p>Luftfuktighet: <%= humidity.value %><%= humidity.unit %></p>
-      <p><i style="<%= rotation%>" class="glyphicon glyphicon-arrow-down"/> <%= wind.value %><%= wind.unit %></p>
-
-      <ul class="pager">
-        <li class="previous"><a href="#prev">&larr; Föregående</a></li>
-        <li class="next"><a href="#next">Nästa &rarr;</a></li>
-      </ul>
     </script>
 
     <article class="jumbotron">
@@ -48,5 +21,6 @@
         Hämtar GPS-position och data från SMHI...
       </div>
     </article>
+
   </body>
 </html>

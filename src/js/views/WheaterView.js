@@ -1,8 +1,9 @@
 define([
   'backbone',
   'lodash',
-  'jquery'
-], function(Backbone, _, $) {
+  'jquery',
+  'text!./templates/wheaterTemplate.html'
+], function(Backbone, _, $, tmpl) {
   'use strict';
 
   var browser_vendor_prefixes = [
@@ -57,8 +58,7 @@ define([
 
   return Backbone.View.extend({
     el: '#wheater',
-    template: $('#wheater_tmpl').html(),
-    
+
     events: {
       'click li.next a': 'next',
       'click li.previous a': 'prev'
@@ -85,7 +85,7 @@ define([
         icon: getWheaterIcon(this.model.get('wheater').value, this.model.get('cloud').value)
       }, this.model.toJSON());
 
-      var markup = _.template(this.template, viewmodel),
+      var markup = _.template(tmpl, viewmodel),
           $el = this.$el;
       
       if (isLoadingGPSAndWheater($el)) {
