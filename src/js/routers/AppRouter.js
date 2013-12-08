@@ -1,76 +1,73 @@
-define([
-  'backbone',
-  './../utils/DateUtils',
-  './../views/WheaterView'
-], function(Backbone, DateUtils, WheaterView) {
+define(function(require) {
   'use strict';
 
-  var to = {
-    next: function(index) {
-      return index + 1;
-    },
-    
-    prev: function(index) {
-      return index - 1;
-    }
-  },
+  var Backbone          = require('backbone'),
+      CoordUtils        = require('../utils/CoordUtils'),
+      LocationRouter    = require('./LocationRouter'),
+      WheaterCollection = require('../models/WheaterCollection'),
+      ErrorView         = require('../views/ErrorView'),
+      PlaceView         = require('../views/PlaceView'),
+      CarouselView      = require('../views/CarouselView'),
+      map               = require('../map'),
+      LocationProvider  = require('../providers/LocationProvider'),
+      PlaceProvider     = require('../providers/PlaceProvider'),
   
-  nav = function(directionFn, id, fallbackFn) {
-    var model = this.collection.get(id);
 
-    if (!model) {
-      fallbackFn.apply(this, []);
-      return;
-    }
-    
-    var index = this.collection.indexOf(model),
-        next = this.collection.at(directionFn(index));
-    
-    if (!next) {
-      fallbackFn.apply(this, []);
-      return;
-    }
-    
-    new WheaterView({ model: next });
+  handleError = function(err) {
+    new ErrorView({ model: err });
+  },
+
+  navigateByCoords = function(coords) {
+    coords = CoordUtils.toFixed(coords);
+    PlaceView.create(coords);
+
+    var collection = new WheaterCollection(coords);
+
+    collection.fetch().done(function() {
+      var locationRouter = new LocationRouter('loc', collection);
+      locationRouter.navigate(coords.lat + '/' + coords.lon);
+
+      map.create(coords);
+
+      new CarouselView(collection);
+    })
+    .fail(handleError);
   };
-  
-  return Backbone.Router.extend({
+
+  var AppRouter = Backbone.Router.extend({
     
     routes: {
       '': 'index',
       'loc/:lat/:lon': 'location',
-      'loc/:lat/:lon/next/:id': 'next',
-      'loc/:lat/:lon/prev/:id': 'prev',
-      '*actions': 'defaultAction' // matches http://example.com/#anything-here
+      'place/:place': 'place',
+      '*actions': 'index' // matches http://example.com/#anything-here      
     },
 
-    initialize: function(collection) {
-      this.collection = collection;
-      if (this.collection) {
-        this.first();
-      }
+    initialize: function() {
+      Backbone.history.start({ pushState: true });
     },
 
-    first: function() {
-      var time = DateUtils.toHourString(),
+    index: function() {
+      new LocationProvider()
+          .fetch()
+          .done(navigateByCoords)
+          .fail(handleError);
+    },
 
-      model = this.collection.find(function(model) {
-        return DateUtils.toHourString(model.get('fullDate')) === time;
+    location: function(lat, lon) {
+      navigateByCoords(CoordUtils.create(lat, lon));
+    },
+
+    place: function(place) {
+      PlaceProvider.fetch(place).done(function(data) {
+        var loc = data.results[0].geometry.location;
+        var coords = CoordUtils.create(loc.lat, loc.lng);
+
+        navigateByCoords(coords);
       });
-
-      new WheaterView({ model: model || this.collection.first() });
-    },
-    
-    last: function() {
-      new WheaterView({ model: this.collection.last() });
-    },
-    
-    prev: function(lat, lon, id) {
-      nav.apply(this, [to.prev, id, this.last]);
-    },
-    
-    next: function(lat, lon, id) {
-      nav.apply(this, [to.next, id, this.first]);
     }
+
   });
+
+  return new AppRouter;
 });
