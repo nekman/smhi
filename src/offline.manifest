@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# 2013-11-29 12:03
+# 2013-12-8 20:00
 
 NETWORK:
 *
@@ -8,6 +8,7 @@ CACHE:
 
 #CSS
 css/weather-icons.min.css
+css/app.css
 
 #ICONS
 font/weathericons-regular-webfont.eot
