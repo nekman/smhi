@@ -9,19 +9,28 @@ function(Backbone, $, _, Place) {
 
   var View = Backbone.View.extend({
     el: '#place',
-    template: $('#place_tmpl').html(),
+
+    events: {
+      'keyup': 'submit'
+    },
+
+    submit: function(e) {
+      if (e.which === 13) {
+        Backbone.history.loadUrl('/place/' + this.$el.val());
+      }
+    },
 
     initialize: function() {
+      this.$el.off('keyup');
       this.listenTo(this.model, 'change', this.render);
       this.model.fetch();
     },
 
     render: function() {
       var json = this.model.toJSON(),
-          viewModel = json.geonames[0] || {},
-          markup = _.template(this.template, viewModel);
+          viewModel = json.geonames[0] || {};
 
-      this.$el.html(markup);
+      this.$el.val(viewModel.name);
 
       return this;
     }

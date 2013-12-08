@@ -1,21 +1,32 @@
-<h3><%=date %> <%=time%></h3>
-<small><%=collection.coords.lat%>/<%=collection.coords.lon%></small>
-<div style="margin-left:15px;">
-  <i class="<%= icon %>" style="font-size:50px;"/>           
-</div>
-<% if (rainfall.value) { %>
-  <p><%= wheater.name %> (<%= rainfall.value %><%= rainfall.unit %>)</p>
-<% } else { %>
-  <p><%= cloud.name %></p>
-<% } %>
-<p>Temperatur: <%= temperature.value %><%= temperature.unit %></p>
-<p>Luftfuktighet: <%= humidity.value %><%= humidity.unit %></p>
-<p>
-    <i style="<%= rotation%>" class="glyphicon glyphicon-arrow-down"/>
-    <%= wind.value %><%= wind.unit %>
-</p>
+<div class="container">
+  <div class="row">
 
-<ul class="pager">
-  <li class="previous"><a href="#prev">&larr; Föregående</a></li>
-  <li class="next"><a href="#next">Nästa &rarr;</a></li>
-</ul>
+    <div class="col-xs-12">
+      <h2><%=date %> <%=time%></h2>
+    </div>
+
+    <div class="col-xs-3">
+      <h3><%= temperature.value %><%= temperature.unit %></h3>
+    </div>
+
+    <div class="col-xs-3">
+      <i class="<%= icon %>" style="font-size: 50px;"/>
+    </div>
+
+    <div class="col-xs-6">
+      <% if (rainfall.value) { %>
+        <p><%= wheater.name %> (<%= rainfall.value %><%= rainfall.unit %>)</p>
+      <% } else { %>
+        <p><%= cloud.name %></p>
+      <% } %>    
+    
+      <p>
+          <i style="font-size: 25px; <%= rotation%>" class="glyphicon glyphicon-arrow-down"/>
+          <%= wind.value %><%= wind.unit %>
+      </p>
+    
+      <p>Luftfuktighet: <%= humidity.value %><%= humidity.unit %></p>
+    </div>
+    
+  </div>
+</div>
