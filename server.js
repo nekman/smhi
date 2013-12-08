@@ -11,6 +11,11 @@ app.configure(function() {
     res.redirect('#/loc/'+ req.params.lat +'/' + req.params.lon);
   });
 
+  // Place route
+  app.all('/place/:place', function(req, res) {
+    res.redirect('#/place/'+ req.params.place);
+  });
+
   // Index routes
   app.all('/', function(req, res) {
     res.sendfile('src/index.html', { root: __dirname });
