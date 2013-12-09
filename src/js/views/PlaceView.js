@@ -22,7 +22,15 @@ function(Backbone, $, _, Place) {
     },
 
     initialize: function() {
-      this.$el.off('keyup');
+      var $el = this.$el;
+      
+      $el.off('keyup').off('focus').off('mouseup')
+      .on('focus', function() {
+        $el.select();
+      }).on('mouseup', function (e) {
+        e.preventDefault();
+      });
+
       this.listenTo(this.model, 'change', this.render);
       this.model.fetch();
     },
