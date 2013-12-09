@@ -16,6 +16,7 @@ function(Backbone, $, _, Place) {
 
     submit: function(e) {
       if (e.which === 13) {
+        this.$el.blur();
         Backbone.history.loadUrl('/place/' + this.$el.val());
       }
     },

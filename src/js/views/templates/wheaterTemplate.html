@@ -4,7 +4,8 @@
     <div class="col-xs-12">
       <h2><%=date %> <%=time%></h2>
     </div>
-
+  </div>
+  <div class="row">
     <div class="col-xs-3">
       <h3><%= temperature.value %><%= temperature.unit %></h3>
     </div>
@@ -26,7 +27,14 @@
       </p>
     
       <p>Luftfuktighet: <%= humidity.value %><%= humidity.unit %></p>
-    </div>
-    
+    </div>    
   </div>
+
+  <a class="left carousel-control" href="#prev" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#next" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
+</div>
 </div>

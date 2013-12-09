@@ -32,7 +32,17 @@ function($, Backbone, _, tmpl) {
     },
 
     render: function() {
-      var markup = _.template(tmpl, { items: this.collection.toJSON() });
+      var map = {},
+      
+      items = _.filter(this.collection.models, function(model) {
+        if (!map[model.date]) {
+          map[model.date] = model;
+
+          return model;
+        }
+      }),
+
+      markup = _.template(tmpl, { items: items });
 
       this.$el
           .empty()

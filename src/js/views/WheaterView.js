@@ -60,8 +60,8 @@ define([
     el: '#wheater',
 
     events: {
-      'click li.next a': 'next',
-      'click li.previous a': 'prev'
+      'click a.right': 'next',
+      'click a.left': 'prev'
     },
 
     initialize: function() {
@@ -71,12 +71,12 @@ define([
 
     prev: function(e) {
       e.preventDefault();
-      Backbone.history.loadUrl(e.target.pathname + '/prev/' + this.model.get('cid'));
+      Backbone.history.loadUrl(location.pathname.substr(1) + '/prev/' + this.model.get('cid'));
     },
 
     next: function(e) {
       e.preventDefault();
-      Backbone.history.loadUrl(e.target.pathname + '/next/' + this.model.get('cid'));
+      Backbone.history.loadUrl(location.pathname.substr(1) + '/next/' + this.model.get('cid'));
     },
 
     render: function() {
