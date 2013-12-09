@@ -44,7 +44,7 @@ define(['google'], function(google) {
       var marker = new google.maps.Marker({
         position: position,
         map: map,
-        icon: icon,
+        /*icon: icon,*/
         animation: google.maps.Animation.DROP,
         draggable: true
       });

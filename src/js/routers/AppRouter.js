@@ -2,17 +2,16 @@ define(function(require) {
   'use strict';
 
   var Backbone          = require('backbone'),
-      CoordUtils        = require('../utils/CoordUtils'),
       LocationRouter    = require('./LocationRouter'),
+      CoordUtils        = require('../utils/CoordUtils'),
       WheaterCollection = require('../models/WheaterCollection'),
       ErrorView         = require('../views/ErrorView'),
       PlaceView         = require('../views/PlaceView'),
       CarouselView      = require('../views/CarouselView'),
-      map               = require('../map'),
       LocationProvider  = require('../providers/LocationProvider'),
       PlaceProvider     = require('../providers/PlaceProvider'),
+      map               = require('../map'),
   
-
   handleError = function(err) {
     new ErrorView({ model: err });
   },

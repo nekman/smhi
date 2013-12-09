@@ -25,4 +25,4 @@ require({
     }
   }
 
-}, ['./routers/AppRouter', 'map']);
+}, ['app']);
