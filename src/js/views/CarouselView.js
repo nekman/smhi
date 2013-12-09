@@ -8,7 +8,7 @@ function($, Backbone, _, tmpl) {
   'use strict';
 
   var CarouselView = Backbone.View.extend({
-    el: 'footer',
+    el: '#scroll',
 
     events: {
       'click .owl-item': 'next',

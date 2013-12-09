@@ -1,4 +1,7 @@
-define(['google'], function(google) {
+define([
+  'google'
+],
+function(google, $) {
   'use strict';
 
   var MAP_TYPE_ID = 'Styled',

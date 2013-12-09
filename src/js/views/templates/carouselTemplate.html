@@ -1,8 +1,8 @@
 <div class="owl-carousel">
   <% _.each( items, function( model ){ %>    
-    <nav class="wheateritem grabbable" cid="<%= model.cid %>">
+    <div class="wheateritem grabbable" cid="<%= model.cid %>">
       <strong><%=model.date %></strong>
       <p><%= model.temperature.value %><%= model.temperature.unit %></p>      
-    </nav>
+    </div>
   <% }); %>
 </div>
