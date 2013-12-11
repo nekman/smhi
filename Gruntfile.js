@@ -20,7 +20,9 @@ module.exports = function(grunt) {
               paths: {
                 jquery: 'src/vendor/jquery',
                 lodash: 'src/vendor/lodash',
-                backbone: 'src/vendor/backbone'
+                backbone: 'src/vendor/backbone',
+                carousel: 'src/vendor/owl.carousel',
+                text: 'src/vendor/text'
               },
               shim: {
                 backbone: {
