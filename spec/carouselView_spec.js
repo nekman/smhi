@@ -1,7 +1,7 @@
 define(function(require) {
   'use strict';
 
-  var wheaterCollection = require('./testUtils/fakeWheaterCollection'),
+  var wheaterCollection = require('./testutils/fakeWheaterCollection'),
       jQuery            = require('jquery'),
       CarouselView      = require('../src/js/views/CarouselView');
 

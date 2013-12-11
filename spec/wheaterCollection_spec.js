@@ -2,7 +2,7 @@ define(function(require) {
   'use strict';
 
   var jQuery = require('jquery'),
-      weaterCollection = require('./testUtils/fakeWheaterCollection');
+      weaterCollection = require('./testutils/fakeWheaterCollection');
 
   describe('WheaterCollection', function() {
     var sut;
