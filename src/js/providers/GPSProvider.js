@@ -5,8 +5,8 @@ function ($) {
   'use strict';
 
   var GPS_TIMEOUT_SETTINGS = {
-    timeout: 10000,
-    maximumAge: 60000
+    timeout: 3000,
+    maximumAge: 0
   },
 
   hasGeoLocation = function() {
