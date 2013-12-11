@@ -2,16 +2,17 @@ define([
   'carousel',
   'backbone',
   'lodash',
+  '../utils/IconUtils',
   'text!./templates/carouselTemplate.html'
 ],
-function($, Backbone, _, tmpl) {
+function($, Backbone, _, IconUtils, tmpl) {
   'use strict';
 
   var CarouselView = Backbone.View.extend({
     el: '#scroll',
 
     events: {
-      'click .owl-item': 'next',
+      'click .owl-item': 'show',
     },
 
     initialize: function(collection) {
@@ -20,10 +21,10 @@ function($, Backbone, _, tmpl) {
       this.render();
     },
 
-    next: function(e) {
+    show: function(e) {
       e.preventDefault();
 
-      var cid = $(e.target).parents('.owl-item:first')
+      var cid = $(e.target).closest('.owl-item')
                            .find('.wheateritem')
                            .attr('cid');
       if (cid) {
@@ -32,17 +33,16 @@ function($, Backbone, _, tmpl) {
     },
 
     render: function() {
-      var map = {},
-      
-      items = _.filter(this.collection.models, function(model) {
-        if (!map[model.date]) {
-          map[model.date] = model;
-
-          return model;
-        }
+      var viewModels = _.map(this.collection.groupModelsByDayAndTime(), function(model) {
+        model.icon = IconUtils.getWheaterIcon(
+          model.get('wheater').value,
+          model.get('cloud').value
+        );
+          
+        return model;
       }),
 
-      markup = _.template(tmpl, { items: items });
+      markup = _.template(tmpl, { items: viewModels });
 
       this.$el
           .empty()
@@ -52,7 +52,6 @@ function($, Backbone, _, tmpl) {
             itemsCustom: [[0, 2], [400, 4], [700, 6], [1000, 8], [1200, 10], [1600, 16]]
           });
     }
-
   });
 
   return CarouselView;

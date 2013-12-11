@@ -2,7 +2,10 @@
   <% _.each( items, function( model ){ %>    
     <div class="wheateritem grabbable" cid="<%= model.cid %>">
       <strong><%=model.date %></strong>
-      <p><%= model.temperature.value %><%= model.temperature.unit %></p>      
+      <p>
+        <%= model.temperature.value %><%= model.temperature.unit %>
+        <i class="<%= model.icon %>"/>
+      </p>
     </div>
   <% }); %>
 </div>
