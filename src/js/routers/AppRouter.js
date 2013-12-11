@@ -59,8 +59,8 @@ define(function(require) {
 
     place: function(place) {
       PlaceProvider.fetch(place).done(function(data) {
-        var loc = data.results[0].geometry.location;
-        var coords = CoordUtils.create(loc.lat, loc.lng);
+        var loc = data.results[0].geometry.location,
+            coords = CoordUtils.create(loc.lat, loc.lng);
 
         navigateByCoords(coords);
       });

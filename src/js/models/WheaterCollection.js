@@ -1,8 +1,9 @@
 define([
   'backbone',
+  'lodash',
   '../utils/DateUtils'
 ],
-function(Backbone, DateUtils) {
+function(Backbone, _, DateUtils) {
   'use strict';
 
   var SMHI_GEOPOINT_URL = 'http://opendata-download-metfcst.smhi.se/api/' +
@@ -32,6 +33,10 @@ function(Backbone, DateUtils) {
       8: 'Mulet'
     },
 
+    isMiddleOfDay: function() {
+      return this.time === '13:00';
+    },
+
     parse: function(res) {
       this.wind          = { value: res.ws, unit: 'm/s' };
       this.cloud         = { value: res.tcc, name: this.cloudType[res.tcc] };
@@ -55,6 +60,20 @@ function(Backbone, DateUtils) {
     
     initialize: function(coords) {
       this.coords = coords;
+    },
+
+    groupModelsByDayAndTime: function() {
+      var dateGroups = _.groupBy(this.models, function(model) {
+        return model.date;
+      });
+
+      return _.map(dateGroups, function(models) {
+        var model = _.find(models, function(model) {
+          return model.isMiddleOfDay();
+        });
+
+        return model || models[parseInt(models.length / 2, 10)];
+      });
     },
 
     url: function() {
