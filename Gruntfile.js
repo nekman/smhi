@@ -44,7 +44,8 @@ module.exports = function(grunt) {
         'src/js/routers/*.js',
         'src/js/utils/*.js',
         'src/js/views/*.js',
-        'src/js/*.js'
+        'src/js/*.js',
+        'spec/**/*.js'
       ],
       options: {
         curly: true,
@@ -59,8 +60,15 @@ module.exports = function(grunt) {
         '-W058': false,
         eqnull: true,
         globals: {
+          /* RequireJS */
           define: true,
-          require: true
+          require: true,
+          /* Jasmine */
+          it: true,
+          spyOn: true,
+          expect: true,
+          beforeEach: true,
+          describe: true
         }
       }
     }

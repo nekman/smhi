@@ -43,6 +43,7 @@ define(function(require) {
     }]
   },
 
+  jQuery            = require('jquery'),
   WheaterCollection = require('../../src/js/models/WheaterCollection');
 
   return {
