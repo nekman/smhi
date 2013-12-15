@@ -4,9 +4,11 @@ define([
 function ($) {
   'use strict';
 
-  var GPS_TIMEOUT_SETTINGS = {
-    timeout: 3000,
-    maximumAge: 0
+  var GPS_SETTINGS = {
+    frequency: 5000,
+    maximumAge: 0,
+    timeout: 500,
+    enableHighAccuracy: true
   },
 
   hasGeoLocation = function() {
@@ -39,7 +41,7 @@ function ($) {
     window.navigator.geolocation.getCurrentPosition(
       resolveGPS(dfd),
       rejectGPS(dfd),
-      GPS_TIMEOUT_SETTINGS
+      GPS_SETTINGS
     );
       
     return dfd.promise();
