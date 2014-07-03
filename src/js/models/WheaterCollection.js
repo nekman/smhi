@@ -7,7 +7,7 @@ function(Backbone, _, DateUtils) {
   'use strict';
 
   var SMHI_GEOPOINT_URL = 'http://opendata-download-metfcst.smhi.se/api/' +
-                          'category/pmp1g/version/1/geopoint/lat/{{lat}}/lon/{{lon}}/data.json',
+                          'category/pmp1.5g/version/1/geopoint/lat/{{lat}}/lon/{{lon}}/data.json',
   
   WheaterModel = Backbone.Model.extend({
     
