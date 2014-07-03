@@ -34,7 +34,7 @@ define(function(require) {
     });
 
     it('should create url with coordinates', function() {
-      expect(sut.url()).toBe('http://opendata-download-metfcst.smhi.se/api/category/pmp1g/' +
+      expect(sut.url()).toBe('http://opendata-download-metfcst.smhi.se/api/category/pmp1.5g/' +
                              'version/1/geopoint/lat/1.000000/lon/0.000000/data.json');
     });
   });
